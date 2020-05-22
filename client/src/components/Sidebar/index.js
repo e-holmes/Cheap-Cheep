@@ -8,7 +8,6 @@ import "./style.css";
 
 function Sidebar(props) {
 
-  // console.log(this.state.Lists);
   return (
     <table className="table table-success table-lists table-hover table-sm">
       <thead>

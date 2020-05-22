@@ -1,3 +1,6 @@
+//This script was just used for testing scraper functionality.
+//The actually scraping happens in the controllers.
+
 var cheerio = require("cheerio");
 const puppeteer = require('puppeteer');
 

@@ -8,28 +8,42 @@ import Login from "./pages/login";
 import API from "./utils/API";
 
 
-
-
-
 class App extends Component {
 
   state = {
     showLogin: true,
     hideLogoutButton: true,
     loginName: "",
-    loginPass: ""
+    loginPass: "",
+    isLoggedIn: false
   }
 
-  // handleLoginButton = () => {
-  //   // event.preventDefault();
-  //   // this.setState({ hideLogoutButton: false, showLogin: false })
-  //   // console.log("hideLogoutButton: " + this.state.hideLogoutButton)
-  //   console.log("handleloginbutton")
-  // }
+  componentDidMount() {
+
+    //grabbing the current route
+    var currentRoute = window.location.href.split("/");
+    currentRoute = currentRoute[currentRoute.length-1]
+
+
+    //make sure that if we're logged in state is correct and we're on the correct route
+    if (localStorage.getItem("isLoggedIn")) {
+      this.setState({ hideLogoutButton: false, showLogin: false });
+
+      if (currentRoute === ""){
+        window.location.href= "/main";
+      }
+
+    } else if (currentRoute === "main"){
+      window.location.href= "/";
+    }
+
+  }
 
   handleLogout = (event) => {
     event.preventDefault();
-    this.setState({ hideLogoutButton: true, showLogin: true })
+    localStorage.removeItem("id");
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "/";
   }
 
   handleLogin = event => {
@@ -37,17 +51,12 @@ class App extends Component {
     event.preventDefault();
 
     if (this.state.loginName && this.state.loginPass) {
-      const handleLoginButton = () => {
-        this.setState({ hideLogoutButton: false, showLogin: false })
-        console.log("hideLogoutButton: " + this.state.hideLogoutButton)
-        // console.log("handleloginbutton", this.state)
-      }
+      
         API.login({
             userName: this.state.loginName,
             password: this.state.loginPass,
   
         }).then( function(response) {
-          console.log(response);
   
           if (response.data.found === false){
             console.log("User not found.")
@@ -55,9 +64,8 @@ class App extends Component {
             console.log("Password is incorrect");
           } else {
              localStorage.setItem("id", response.data.userID);
-             window.location.href = "/main";
-             handleLoginButton()
-             
+             localStorage.setItem("isLoggedIn", true);
+             window.location.href = "/main";         
           }
         })
             .catch(err => console.log(err));  
@@ -74,7 +82,7 @@ class App extends Component {
         [name]: value
     });
   
-    // console.log(this.state);
+
   };
 
   render() {

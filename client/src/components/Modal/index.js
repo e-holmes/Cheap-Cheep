@@ -5,6 +5,7 @@ import "./style.css";
 
 function Modal(prop) {
     const showHideClassName = prop.showModalOne || prop.showModalTwo ? "modal display-block" : "modal display-none";
+    const HideButtons = prop.footerClass ? "modal-footer display-block" : "modal-footer display-none"
     return (
         <div className={showHideClassName} tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
@@ -18,9 +19,9 @@ function Modal(prop) {
                     <div className="modal-body">
                         {prop.body}
                     </div>
-                    <div className="modal-footer">
+                    <div className={HideButtons}>
                         <button type="button" onClick={prop.submit} className="btn btn-primary">{prop.buttonOne}</button>
-    <button type="button" className="btn btn-secondary" onClick={prop.hideModal} data-dismiss="modal">{prop.buttonTwo}</button>
+                        <button type="button" className="btn btn-secondary" onClick={prop.hideModal} data-dismiss="modal">{prop.buttonTwo}</button>
                     </div>
                 </div>
             </div>

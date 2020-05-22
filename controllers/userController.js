@@ -24,7 +24,6 @@ module.exports = {
           userID: -1
         }
 
-        console.log(dbResult);
         //here we catch if the username and password both match the request. We return the userID.
         if (!dbResult.userName) {
           userData.found = false;

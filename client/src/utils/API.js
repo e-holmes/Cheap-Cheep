@@ -6,7 +6,6 @@ export default {
 
   // Gets all items
   getItem: function () {
-    console.log("this is api.js getItem")
     return axios.get("/api/item");
   },
   // Gets a item with the given id
@@ -26,12 +25,14 @@ export default {
 
   // Gets all list
   getList: function () {
-    console.log("this is from list item")
     return axios.get("/api/list");
   },
   // Gets a list with the given id
   getOneList: function (id) {
     return axios.get("/api/list/" + id);
+  },
+  getUserLists: function (id) {
+    return axios.get("/api/list/user/" + id);
   },
   // Deletes a list with the given id
   deleteList: function (id) {
@@ -41,16 +42,22 @@ export default {
   saveList: function (listData) {
     return axios.post("/api/list", listData);
   },
-
+  //add an item to a specific list
+  addItemToList: function (currentList, itemData) {
+    return axios.put("/api/list/" + currentList, itemData);
+  },
+  //deletes an item from a specific list
+  deleteItemFromList: function (currentList, itemData) {
+    return axios.put("/api/list/delete/" + currentList, itemData);
+  },
   //User API Methods
 
   // Gets all user
-
   getAllUsers: function () {
     return axios.get("/api/user");
   },
+  //login route
   login: function (user) {
-    console.log(user);
     return axios.post("/api/user/login", user);
   },
   // Gets a user with the given id
@@ -63,7 +70,6 @@ export default {
   },
   // Saves a user to the database
   saveUser: function (userData) {
-    console.log("This is in API.js" + userData);
     return axios.post("/api/user", userData);
   },
 
@@ -71,10 +77,11 @@ export default {
 
   //Scrapes walmart for the first product with the search term
   scrapeWalmart: function (searchTerm) {
-    return axios.get("/api/walmart/" + searchTerm);
+    return axios.get("/api/scraper/walmart/" + searchTerm);
   },
-  scrapeCraiglist: function (searchTerm) {
-    return axios.get("/api/Craiglist/" + searchTerm);
+  //Scrapes craigslist for the first product with the search term
+  scrapecraiglist: function (searchTerm) {
+    return axios.get("/api/scraper/craigslist/" + searchTerm);
   }
 
 };
